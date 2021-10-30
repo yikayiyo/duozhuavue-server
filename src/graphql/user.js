@@ -10,6 +10,7 @@ const userType = `
     purchasedBooks: [Book]
     #orders: []
     #activities: []
+		#addresses: [String!]
     balance: Int
     creditBalance: Float
     income: Int
