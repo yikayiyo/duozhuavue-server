@@ -7,6 +7,7 @@ const userSchema = new mongoose.Schema({
 	email: {
 		type: String,
 		required: true,
+		index: { unique: true },
 	},
 	password: {
 		type: String,
@@ -32,12 +33,20 @@ const userSchema = new mongoose.Schema({
 	},
 	balance: {
 		type: Number,
+		default: 0,
 	},
 	creditBalance: {
 		type: Number,
+		default: 0,
 	},
-	income: Number,
-	avatar: String,
+	income: {
+		type: Number,
+		default: 0,
+	},
+	avatar: {
+		type: String,
+		default: "",
+	},
 });
 
 const User = mongoose.model("user", userSchema);
