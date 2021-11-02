@@ -4,9 +4,9 @@ const collectionType = `
     name: String!
     description: String!
     image: String!
-    items: [Book!]
+    items: [Book!]!
     maskColor: String!
-    contributors: [User!]
+    contributors: [User!]!
     proposer: User
   }
 `;
@@ -24,6 +24,20 @@ const collectionResolver = {
 		proposer: async ({ proposer }, _, { models }) => {
 			const user = await models.User.findById(proposer);
 			return user;
+		},
+		items: async ({ items }, _, { models }) => {
+			return await models.Book.find({
+				_id: {
+					$in: items,
+				},
+			});
+		},
+		contributors: async ({ contributors }, _, { models }) => {
+			return await models.User.find({
+				_id: {
+					$in: contributors,
+				},
+			});
 		},
 	},
 };

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const goodSchema = new mongoose.Schema({
 	is: {
-		type: mongoose.ObjectId,
+		type: mongoose.Types.ObjectId,
 		required: true,
 	},
 	condition: {
@@ -17,13 +17,16 @@ const goodSchema = new mongoose.Schema({
 		required: true,
 	},
 	lastOwner: {
-		type: mongoose.ObjectId,
+		type: mongoose.Types.ObjectId,
+		ref: "user",
 	},
 	latestSellers: {
-		type: mongoose.ObjectId,
+		type: mongoose.Types.ObjectId,
+		ref: "user",
 	},
 	latestTraders: {
-		type: mongoose.ObjectId,
+		type: mongoose.Types.ObjectId,
+		ref: "user",
 	},
 });
 

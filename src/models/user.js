@@ -13,18 +13,30 @@ const userSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	owningBooks: {
-		type: Array,
-	},
-	bookShelf: {
-		type: Array,
-	},
-	soldBooks: {
-		type: Array,
-	},
-	purchasedBooks: {
-		type: Array,
-	},
+	owningBooks: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "book",
+		},
+	],
+	bookShelf: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "book",
+		},
+	],
+	soldBooks: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "book",
+		},
+	],
+	purchasedBooks: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "book",
+		},
+	],
 	orders: {
 		type: Array,
 	},

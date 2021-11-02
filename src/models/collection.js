@@ -12,19 +12,25 @@ const collectionSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
-	items: {
-		type: Array,
-		required: true,
-	},
+	items: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "book",
+			required: true,
+		},
+	],
 	maskColor: {
 		type: String,
 		required: true,
 	},
-	contibutors: {
-		type: Array,
-		required: true,
-	},
-	proposer: mongoose.ObjectId,
+	contributors: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "user",
+			required: true,
+		},
+	],
+	proposer: mongoose.Types.ObjectId,
 });
 const Collection = mongoose.model("collection", collectionSchema);
 module.exports = Collection;

@@ -15,14 +15,19 @@ const http = require("http");
 const typeDefs = require("./schema.js");
 const { resolvers } = require("./resolvers.js");
 
+const { getUser } = require("./utils.js");
+
 async function startApolloServer(typeDefs, resolvers) {
 	const app = express();
 	const httpServer = http.createServer(app);
 	const server = new ApolloServer({
 		typeDefs,
 		resolvers,
-		context: async () => {
-			return { models };
+		context: async ({ req }) => {
+			const token = req.headers.authorization;
+			const user = getUser(token);
+			console.log("current user: ", user);
+			return { models, user };
 		},
 		plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],
 	});
