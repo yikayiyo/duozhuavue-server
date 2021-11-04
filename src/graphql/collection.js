@@ -7,6 +7,7 @@ const collectionType = `
     items: [Book!]!
     maskColor: String!
     contributors: [User!]!
+		contributions: [Contribution!]!
     proposer: User
   }
 `;
@@ -36,6 +37,13 @@ const collectionResolver = {
 			return await models.User.find({
 				_id: {
 					$in: contributors,
+				},
+			});
+		},
+		contributions: async ({ contributions }, _, { models }) => {
+			return await models.Contribution.find({
+				_id: {
+					$in: contributions,
 				},
 			});
 		},

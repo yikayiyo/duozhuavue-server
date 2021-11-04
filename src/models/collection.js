@@ -30,6 +30,13 @@ const collectionSchema = new mongoose.Schema({
 			required: true,
 		},
 	],
+	contributions: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "contribution",
+			required: true,
+		},
+	],
 	proposer: mongoose.Types.ObjectId,
 });
 const Collection = mongoose.model("collection", collectionSchema);
