@@ -2,11 +2,11 @@ const goodType = `
 	type Good {
 		id: ID!
 		is: ID!
+		type: String!
 		"商品品质"
 		condition: String!
 		"消费金额"
 		price: Int!
-		type: String!
 		lastOwner: User
 		latestSellers: [User]
 		latestTraders: [User]
