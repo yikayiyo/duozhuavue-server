@@ -10,11 +10,11 @@ const bookType = `
 		"装帧"
 		binding: String!
 		doubanRating: Float!
-		authorIntro: String!
+		authorIntro: String
 		isbn13: String!
 		originalPrice: Int!
-		summary: String!
-		catalog: String!
+		summary: String
+		catalog: String
 		image: String!
 	}
 `;
