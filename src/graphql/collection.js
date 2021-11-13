@@ -1,3 +1,8 @@
+const {
+	AuthenticationError,
+	ForbiddenError,
+} = require("apollo-server-express");
+
 const collectionType = `
   type Collection {
     id: ID!
@@ -14,10 +19,18 @@ const collectionType = `
 
 const collectionResolver = {
 	Query: {
-		collection: async (_, { id }, { models }) => {
+		collection: async (_, { id }, { models, user }) => {
+			if (!user)
+				throw new ForbiddenError(
+					"You should signIn before visiting collection info!"
+				);
 			return await models.Collection.findById(id);
 		},
-		collections: async (_, __, { models }) => {
+		collections: async (_, __, { models, user }) => {
+			if (!user)
+				throw new ForbiddenError(
+					"You should signIn before visiting collections info!"
+				);
 			return await models.Collection.find({});
 		},
 	},

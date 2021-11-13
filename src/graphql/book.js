@@ -21,10 +21,12 @@ const bookType = `
 
 const bookResolver = {
 	Query: {
-		book: async (_, { id }, { models }) => {
+		book: async (_, { id }, { models, user }) => {
+			if (!user) return null;
 			return await models.Book.findById(id);
 		},
-		books: async (_, __, { models }) => {
+		books: async (_, __, { models, user }) => {
+			if (!user) return null;
 			return await models.Book.find({});
 		},
 	},
