@@ -19,18 +19,14 @@ const collectionType = `
 
 const collectionResolver = {
 	Query: {
-		collection: async (_, { id }, { models, user }) => {
-			if (!user)
-				throw new ForbiddenError(
-					"You should signIn before visiting collection info!"
-				);
+		collection: async (_, { id }, { models }) => {
 			return await models.Collection.findById(id);
 		},
-		collections: async (_, __, { models, user }) => {
-			if (!user)
-				throw new ForbiddenError(
-					"You should signIn before visiting collections info!"
-				);
+		collections: async (_, __, { models }) => {
+			// if (!user)
+			// 	throw new ForbiddenError(
+			// 		"You should signIn before visiting collections info!"
+			// 	);
 			return await models.Collection.find({});
 		},
 	},
