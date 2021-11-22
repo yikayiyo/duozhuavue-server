@@ -26,7 +26,6 @@ async function startApolloServer(typeDefs, resolvers) {
 		context: async ({ req }) => {
 			const token = req.headers.authorization;
 			const user = getUser(token);
-			console.log("current user: ", user);
 			return { models, user };
 		},
 		plugins: [ApolloServerPluginDrainHttpServer({ httpServer })],

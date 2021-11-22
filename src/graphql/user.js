@@ -43,9 +43,11 @@ const userResolver = {
 					email,
 					password: hashed,
 				});
-				return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+				return {
+					id: user._id,
+					token: jwt.sign({ id: user._id }, process.env.JWT_SECRET),
+				};
 			} catch (err) {
-				console.log(err);
 				throw new Error("Error creating account");
 			}
 		},
@@ -59,7 +61,10 @@ const userResolver = {
 			if (!valid) {
 				throw new AuthenticationError("Password didn't match");
 			}
-			return jwt.sign({ id: user._id }, process.env.JWT_SECRET);
+			return {
+				id: user._id,
+				token: jwt.sign({ id: user._id }, process.env.JWT_SECRET),
+			};
 		},
 	},
 	User: {
