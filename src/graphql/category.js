@@ -9,6 +9,7 @@ const categoryType = `
     parentCategory: [Category!]
     subCategory: [Category!]
     themeColor: String
+    items: [Book!]
 	}
 `;
 
@@ -36,6 +37,13 @@ const categoryResolver = {
 			return await models.Category.find({
 				_id: {
 					$in: subCategory,
+				},
+			});
+		},
+		items: async ({ items }, _, { models }) => {
+			return await models.Book.find({
+				_id: {
+					$in: items,
 				},
 			});
 		},

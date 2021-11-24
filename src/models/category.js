@@ -20,15 +20,23 @@ const categorySchema = new mongoose.Schema({
 	},
 	parentCategory: {
 		type: mongoose.Types.ObjectId,
+		ref: "category",
 	},
 	subCategory: [
 		{
 			type: mongoose.Types.ObjectId,
+			ref: "category",
 		},
 	],
 	themeColor: {
 		type: String,
 	},
+	items: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "book",
+		},
+	],
 });
 const Category = mongoose.model("categorys", categorySchema);
 module.exports = Category;
