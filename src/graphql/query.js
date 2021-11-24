@@ -7,6 +7,9 @@ const queryType = `
     collection(id: ID!): Collection!
     collections: [Collection!]
     contribution(id: ID!): Contribution!
+    category(id: ID!): Category!
+    categories: [Category!]
+    topCategories: [Category!]
   }
 `;
 
