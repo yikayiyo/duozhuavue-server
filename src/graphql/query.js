@@ -10,6 +10,7 @@ const queryType = `
     category(id: ID!): Category!
     categories: [Category!]
     topCategories: [Category!]
+    categoryFeed(cursor: String): CategoryFeed
   }
 `;
 
