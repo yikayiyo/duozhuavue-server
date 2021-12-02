@@ -10,7 +10,7 @@ const queryType = `
     category(id: ID!): Category!
     categories: [Category!]
     topCategories: [Category!]
-    categoryFeed(cursor: String): CategoryFeed
+    categoryFeed(first: Int, after: String): CategoryFeed
   }
 `;
 
