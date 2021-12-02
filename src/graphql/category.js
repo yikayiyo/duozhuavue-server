@@ -1,4 +1,29 @@
 const categoryType = `
+	type PageInfo {
+		hasPreviousPage: Boolean!
+		hasNextPage: Boolean!
+		startCursor: String!
+		endCursor: String!
+	}
+
+  type CategoryConnection {
+		edges: [CategoryEdge!]!
+		pageInfo: PageInfo!
+	}
+
+	type CategoryEdge {
+		node: Category!
+	}
+
+	type CategoryItemConnection {
+		edges: [CategoryItemEdge!]!
+		pageInfo: PageInfo!
+	}
+
+	type CategoryItemEdge {
+		node: Book!
+	}
+
 	type Category {
 		id: ID!
 		name: String!
@@ -9,17 +34,11 @@ const categoryType = `
     parentCategory: [Category!]
     subCategory: [Category!]
     themeColor: String
-    items(first: Int, after: String): CategoryItemFeed
+    items(first: Int, after: String): CategoryItemConnection
 	}
 
 	type CategoryFeed {
 		categories: [Category]!
-		cursor: String!
-		hasNextPage: Boolean!
-	}
-
-	type CategoryItemFeed {
-		books: [Book]!
 		cursor: String!
 		hasNextPage: Boolean!
 	}
@@ -87,33 +106,30 @@ const categoryResolver = {
 		items: async ({ items }, { first = 2, after = "" }, { models }) => {
 			let hasNextPage = false;
 			let startIdx = 0;
-			console.log("after: ", after);
 			if (after) {
 				startIdx = items.findIndex((book) => book._id.toString() === after) + 1;
 			}
-			// if (startIdx >= items.length) {
-			// 	return {
-			// 		books: [],
-			// 		cursor: "",
-			// 		hasNextPage: false,
-			// 	};
-			// }
 			let target = items.slice(startIdx, startIdx + first + 1);
 			if (target.length > first) {
 				hasNextPage = true;
 				target = target.slice(0, -1);
 			}
-			console.log(target);
+			// console.log("target: ", target);
 			const newCursor = target[target.length - 1]._id;
 			const books = await models.Book.find({
 				_id: {
 					$in: target,
 				},
 			});
+			const edges = books.map((book) => {
+				return { node: book };
+			});
 			return {
-				books,
-				cursor: newCursor,
-				hasNextPage,
+				edges,
+				pageInfo: {
+					hasNextPage,
+					endCursor: newCursor,
+				},
 			};
 		},
 	},
