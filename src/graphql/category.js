@@ -55,8 +55,9 @@ const categoryResolver = {
 		topCategories: async (_, __, { models }) => {
 			return await models.Category.find({ level: 1 });
 		},
-		categoryFeed: async (_, { first = 2, after = "" }, { models }) => {
+		categoryFeed: async (_, { first = 1, after = "" }, { models }) => {
 			// 数据太少了 -0-
+			let newCursor = after;
 			let hasNextPage = false;
 			let cursorQuery = {
 				//level为1的分类下没有书籍
@@ -68,10 +69,10 @@ const categoryResolver = {
 			};
 			if (after) {
 				cursorQuery = {
+					...cursorQuery,
 					_id: {
 						$gt: after,
 					},
-					level: 2,
 				};
 			}
 			let categories = await models.Category.find(cursorQuery).limit(first + 1);
@@ -79,8 +80,11 @@ const categoryResolver = {
 			if (categories.length > first) {
 				hasNextPage = true;
 				categories = categories.slice(0, -1);
+				newCursor = categories[categories.length - 1]._id;
+			} else if (categories.length > 0) {
+				newCursor = categories[categories.length - 1]._id;
 			}
-			const newCursor = categories[categories.length - 1]._id;
+
 			return {
 				categories,
 				cursor: newCursor,
