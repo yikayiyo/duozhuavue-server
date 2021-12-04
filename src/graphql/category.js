@@ -13,6 +13,7 @@ const categoryType = `
 
 	type CategoryEdge {
 		node: Category!
+		cursor: String!
 	}
 
 	type CategoryItemConnection {
@@ -22,6 +23,7 @@ const categoryType = `
 
 	type CategoryItemEdge {
 		node: Book!
+		cursor: String!
 	}
 
 	type Category {
@@ -36,12 +38,6 @@ const categoryType = `
     themeColor: String
     items(first: Int, after: String): CategoryItemConnection
 	}
-
-	type CategoryFeed {
-		categories: [Category]!
-		cursor: String!
-		hasNextPage: Boolean!
-	}
 `;
 
 const categoryResolver = {
@@ -55,7 +51,7 @@ const categoryResolver = {
 		topCategories: async (_, __, { models }) => {
 			return await models.Category.find({ level: 1 });
 		},
-		categoryFeed: async (_, { first = 1, after = "" }, { models }) => {
+		categoryFeed: async (_, { first = 2, after = "" }, { models }) => {
 			// 数据太少了 -0-
 			let newCursor = after;
 			let hasNextPage = false;
@@ -84,11 +80,13 @@ const categoryResolver = {
 			} else if (categories.length > 0) {
 				newCursor = categories[categories.length - 1]._id;
 			}
-
+			const edges = categories.map((category) => ({ node: category }));
 			return {
-				categories,
-				cursor: newCursor,
-				hasNextPage,
+				edges,
+				pageInfo: {
+					hasNextPage,
+					endCursor: newCursor,
+				},
 			};
 		},
 	},
