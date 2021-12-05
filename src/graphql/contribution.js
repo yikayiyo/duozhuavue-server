@@ -1,5 +1,6 @@
 const contributionType = `
   type Contribution {
+		id: ID!
     contributor: User!
     book: Book!
     reason: String!
