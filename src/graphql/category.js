@@ -108,6 +108,7 @@ const categoryResolver = {
 		items: async ({ items }, { first = 2, after = "" }, { models }) => {
 			let hasNextPage = false;
 			let startIdx = 0;
+			let newCursor = after;
 			if (after) {
 				startIdx = items.findIndex((book) => book._id.toString() === after) + 1;
 			}
@@ -115,9 +116,11 @@ const categoryResolver = {
 			if (target.length > first) {
 				hasNextPage = true;
 				target = target.slice(0, -1);
+				newCursor = target[target.length - 1]._id;
+			} else if (target.length > 0) {
+				newCursor = target[target.length - 1]._id;
 			}
 			// console.log("target: ", target);
-			const newCursor = target[target.length - 1]._id;
 			const books = await models.Book.find({
 				_id: {
 					$in: target,
