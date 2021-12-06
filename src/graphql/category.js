@@ -80,7 +80,10 @@ const categoryResolver = {
 			} else if (categories.length > 0) {
 				newCursor = categories[categories.length - 1]._id;
 			}
-			const edges = categories.map((category) => ({ node: category }));
+			const edges = categories.map((category) => ({
+				node: category,
+				cursor: category._id,
+			}));
 			return {
 				edges,
 				pageInfo: {
@@ -127,7 +130,7 @@ const categoryResolver = {
 				},
 			});
 			const edges = books.map((book) => {
-				return { node: book };
+				return { node: book, cursor: book._id };
 			});
 			return {
 				edges,
