@@ -36,7 +36,7 @@ const bookResolver = {
 			const hasBook = user.bookShelf.indexOf(bookId);
 			// if the book doen't exist in the bookshelf list
 			if (hasBook < 0) {
-				return await models.User.findByIdAndUpdate(
+				const user = await models.User.findByIdAndUpdate(
 					userId,
 					{
 						$push: {
@@ -48,8 +48,14 @@ const bookResolver = {
 						new: true,
 					}
 				);
+				return {
+					code: "200",
+					success: true,
+					message: "book is successfully added to the bookshelf.",
+					user,
+				};
 			} else {
-				return await models.User.findByIdAndUpdate(
+				const user = await models.User.findByIdAndUpdate(
 					userId,
 					{
 						$pull: {
@@ -60,6 +66,12 @@ const bookResolver = {
 						new: true,
 					}
 				);
+				return {
+					code: "200",
+					success: true,
+					message: "book is successfully removed from the bookshelf.",
+					user,
+				};
 			}
 		},
 	},
