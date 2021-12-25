@@ -1,11 +1,11 @@
 const commentType = `
 	type Comment {
 		id: ID!
-    book: Book!
-    user: User!
-    createdAt: DateTime!
-    updatedAt: DateTime!
+		content: String!
+    commenter: User!
     voters: [User!]
+		createdAt: DateTime!
+    updatedAt: DateTime!
 	}
 `;
 
