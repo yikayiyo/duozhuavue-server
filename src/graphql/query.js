@@ -11,6 +11,7 @@ const queryType = `
     categories: [Category!]
     topCategories: [Category!]
     categoryFeed(first: Int, after: String): CategoryConnection
+    comment(id: ID!): Comment!
   }
 `;
 

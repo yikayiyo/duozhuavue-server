@@ -4,6 +4,7 @@ const Good = require("./good");
 const Collection = require("./collection");
 const Contribution = require("./contribution");
 const Category = require("./category");
+const Comment = require("./comment");
 
 const models = {
 	Book,
@@ -12,6 +13,7 @@ const models = {
 	Collection,
 	Contribution,
 	Category,
+	Comment,
 };
 
 module.exports = models;

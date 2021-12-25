@@ -7,6 +7,7 @@ const { collectionType } = require("./graphql/collection.js");
 const { contributionType } = require("./graphql/contribution.js");
 const { mutationType } = require("./graphql/mutation.js");
 const { categoryType } = require("./graphql/category.js");
+const { commentType } = require("./graphql/comment.js");
 
 module.exports = gql`
 	scalar DateTime
@@ -18,4 +19,5 @@ module.exports = gql`
 	${collectionType}
 	${contributionType}
 	${categoryType}
+	${commentType}
 `;

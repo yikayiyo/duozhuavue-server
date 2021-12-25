@@ -24,6 +24,7 @@ const userType = `
     creditBalance: Float!
     income: Int!
 		avatar: String!
+		comments: [Comment!]
 	}
 `;
 
