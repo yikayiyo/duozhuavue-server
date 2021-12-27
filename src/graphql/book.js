@@ -18,6 +18,7 @@ const bookType = `
 		summary: String
 		catalog: String
 		image: String!
+		comments: [Comment!]
 	}
 `;
 
@@ -73,6 +74,15 @@ const bookResolver = {
 					user,
 				};
 			}
+		},
+	},
+	Book: {
+		comments: async ({ comments }, _, { models }) => {
+			return await models.Book.find({
+				_id: {
+					$in: comments,
+				},
+			});
 		},
 	},
 };

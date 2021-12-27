@@ -40,6 +40,12 @@ const bookSchema = new mongoose.Schema({
 	subtitle: String,
 	catalog: String,
 	image: "",
+	comments: [
+		{
+			type: mongoose.Types.ObjectId,
+			ref: "Comment",
+		},
+	],
 });
 // 第一个参数是book时，mongoose会自动关联数据库中名为‘books’（小写、复数形式）的collection
 const Book = mongoose.model("book", bookSchema);
