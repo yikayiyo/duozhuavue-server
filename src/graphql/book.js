@@ -118,7 +118,7 @@ const bookResolver = {
 	},
 	Book: {
 		comments: async ({ comments }, _, { models }) => {
-			return await models.Book.find({
+			return await models.Comment.find({
 				_id: {
 					$in: comments,
 				},
