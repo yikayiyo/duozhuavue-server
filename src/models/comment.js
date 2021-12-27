@@ -6,6 +6,15 @@ const commentSchema = new mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		rating: {
+			type: Number,
+			required: true,
+			default: 0,
+		},
+		voteByMe: {
+			type: Boolean,
+			default: false,
+		},
 		commenter: {
 			type: mongoose.Types.ObjectId,
 			ref: "User",

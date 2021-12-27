@@ -1,8 +1,10 @@
 const commentType = `
 	type Comment {
 		id: ID!
+		rating: Int!
 		content: String!
     commenter: User!
+		voteByMe: Boolean!
     voters: [User!]
 		createdAt: DateTime!
     updatedAt: DateTime!

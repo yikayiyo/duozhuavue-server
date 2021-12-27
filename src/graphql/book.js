@@ -75,6 +75,46 @@ const bookResolver = {
 				};
 			}
 		},
+		addComment: async (
+			_,
+			{ bookId, userId, content, rating, created },
+			{ models }
+		) => {
+			const user = await models.User.findById(userId);
+			const newComment = {
+				rating,
+				content,
+				commenter: user,
+				createdAt: created,
+			};
+			try {
+				const comment = await models.Comment.create(newComment);
+				const book = await models.Book.findByIdAndUpdate(
+					bookId,
+					{
+						$push: {
+							comments: comment._id,
+						},
+					},
+					{
+						new: true,
+					}
+				);
+				return {
+					code: "200",
+					success: true,
+					message: "comment is successfully added.",
+					book,
+					comment,
+				};
+			} catch (error) {
+				return {
+					code: "500",
+					success: false,
+					message: error,
+				};
+			}
+		},
 	},
 	Book: {
 		comments: async ({ comments }, _, { models }) => {

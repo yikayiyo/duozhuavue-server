@@ -4,6 +4,7 @@ const mutationType = `
     signUp(name: String!, email: String!, password: String!): SignInOutResponse!
     signIn(email: String!, password: String!): SignInOutResponse!
     toggleBookshelf(bookId: ID!, userId: ID!): toggleBookshelfResponse!
+    addComment(bookId: ID!, userId: ID!, content: String!, rating: Int, created: DateTime!): addCommentResponse!
   }
 
   interface MutationResponse {
@@ -17,6 +18,14 @@ const mutationType = `
     success: Boolean!
     message: String!
     user: User
+  }
+
+  type addCommentResponse implements MutationResponse {
+    code: String!
+    success: Boolean!
+    message: String!
+    book: Book
+    comment: Comment
   }
 
   type SignInOutResponse {
