@@ -115,6 +115,35 @@ const bookResolver = {
 				};
 			}
 		},
+		deleteComment: async (_, { bookId, commentId }, { models }) => {
+			try {
+				const comment = await models.Comment.findById(commentId);
+				const book = await models.Book.findByIdAndUpdate(
+					bookId,
+					{
+						$pull: {
+							comments: commentId,
+						},
+					},
+					{
+						new: true,
+					}
+				);
+				await comment.remove();
+				return {
+					code: "200",
+					success: true,
+					message: "comment is successfully deleted.",
+					book,
+				};
+			} catch (err) {
+				return {
+					code: "500",
+					success: false,
+					message: err,
+				};
+			}
+		},
 	},
 	Book: {
 		comments: async ({ comments }, _, { models }) => {
