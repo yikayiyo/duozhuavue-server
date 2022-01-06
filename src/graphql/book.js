@@ -144,6 +144,36 @@ const bookResolver = {
 				};
 			}
 		},
+		updateComment: async (
+			_,
+			{ commentId, rating, content, updatedAt },
+			{ models }
+		) => {
+			// 更新comment
+			const filter = { _id: commentId };
+			const update = {
+				rating,
+				content,
+				updatedAt,
+			};
+			try {
+				const comment = await models.Comment.findOneAndUpdate(filter, update, {
+					new: true,
+				});
+				return {
+					code: "200",
+					success: true,
+					message: "comment is successfully updated.",
+					comment,
+				};
+			} catch (error) {
+				return {
+					code: "500",
+					success: false,
+					message: error,
+				};
+			}
+		},
 	},
 	Book: {
 		comments: async ({ comments }, _, { models }) => {
