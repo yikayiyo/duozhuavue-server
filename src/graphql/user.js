@@ -42,6 +42,8 @@ const userResolver = {
 					name,
 					email,
 					password: hashed,
+					avatar:
+						"https://robohash.org/" + name + "?set=set4&bgset=&size=200x200",
 				});
 				return {
 					id: user._id,
