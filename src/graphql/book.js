@@ -156,6 +156,17 @@ const bookResolver = {
 				content,
 				updatedAt,
 			};
+			// 服务器端校验表单内容是否变化，如果没有变化，则返回信息提示更新表单内容
+			const originalComment = await models.Comment.findById(commentId);
+			if(originalComment.rating === rating && originalComment.content === content) {
+				return {
+					code: "200",
+					success: false,
+					message: "you should change rating or comment.",
+				}
+			}
+
+			// 表单变化，尝试更新
 			try {
 				const comment = await models.Comment.findOneAndUpdate(filter, update, {
 					new: true,
