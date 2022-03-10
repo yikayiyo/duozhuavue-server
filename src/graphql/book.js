@@ -30,6 +30,10 @@ const bookResolver = {
 		books: async (_, __, { models }) => {
 			return await models.Book.find({});
 		},
+		isBookInBookshelf: async (_, { bookId, userId }, { models }) => {
+			const user = await models.User.findById(userId);
+			return user.bookShelf.indexOf(bookId) >= 0;
+		}
 	},
 	Mutation: {
 		toggleBookshelf: async (_, { bookId, userId }, { models }) => {

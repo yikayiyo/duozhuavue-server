@@ -2,6 +2,7 @@ const queryType = `
   type Query{
     book(id: ID!): Book!
     books: [Book!]
+    isBookInBookshelf(bookId: ID!, userId: ID!): Boolean!
     user(id: ID!): User!
     good(id: ID!): Good!
     collection(id: ID!): Collection!
