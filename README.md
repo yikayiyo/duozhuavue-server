@@ -9,6 +9,9 @@
 DB_HOST=your-db-host
 JWT_SECRET=your-jwt-secret
 PORT=5000
+NODE_ENV=dev
+ORIGIN_PRODUCTION=your-client-url
+ORIGIN_DEV=http://localhost:3000
 ```
 
 安装依赖，运行项目

@@ -10,6 +10,16 @@ db.connect(DB_HOST);
 const models = require("./models");
 
 const express = require("express");
+const helmet = require("helmet");
+const cors = require("cors");
+
+let corsOptions = {optionsSuccessStatus: 200};
+if(process.env.NODE_ENV === "dev") {
+  corsOptions.origin = process.env.ORIGIN_DEV;
+}else {
+	corsOptions.origin = process.env.ORIGIN_PRODUCTION;
+}
+
 const http = require("http");
 
 const typeDefs = require("./schema.js");
@@ -19,6 +29,8 @@ const { getUser } = require("./utils.js");
 
 async function startApolloServer(typeDefs, resolvers) {
 	const app = express();
+	app.use(helmet());
+	app.use(cors(corsOptions));
 	const httpServer = http.createServer(app);
 	const server = new ApolloServer({
 		typeDefs,
