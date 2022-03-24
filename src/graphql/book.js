@@ -15,6 +15,7 @@ const bookType = `
 		authorIntro: String
 		isbn13: String!
 		originalPrice: Int!
+		price: Int!
 		summary: String
 		catalog: String
 		image: String!
@@ -31,6 +32,7 @@ const bookResolver = {
 			return await models.Book.find({});
 		},
 		isBookInBookshelf: async (_, { bookId, userId }, { models }) => {
+			if(userId === "") return false;
 			const user = await models.User.findById(userId);
 			return user.bookShelf.indexOf(bookId) >= 0;
 		}

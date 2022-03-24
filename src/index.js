@@ -29,8 +29,10 @@ const { getUser } = require("./utils.js");
 
 async function startApolloServer(typeDefs, resolvers) {
 	const app = express();
-	app.use(helmet());
-	app.use(cors(corsOptions));
+	if(process.env.NODE_ENV !== "dev") {
+		app.use(helmet());
+		app.use(cors(corsOptions));
+	}	
 	const httpServer = http.createServer(app);
 	const server = new ApolloServer({
 		typeDefs,
