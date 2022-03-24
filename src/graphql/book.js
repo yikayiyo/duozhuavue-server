@@ -4,6 +4,7 @@ const bookType = `
 	type Book {
 		id: ID!
 		title: String!
+		subtitle: String
 		rawAuthor: String!
 		"出版社"
 		publisher: String!

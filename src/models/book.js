@@ -4,6 +4,7 @@ const bookSchema = new mongoose.Schema({
 		type: String,
 		required: true,
 	},
+	subtitle: String,
 	rawAuthor: {
 		type: String,
 		required: true,
