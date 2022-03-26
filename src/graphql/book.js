@@ -21,6 +21,7 @@ const bookType = `
 		catalog: String
 		image: String!
 		comments: [Comment!]
+		isBookInBookshelf(userId: ID!): Boolean!
 	}
 `;
 
@@ -31,11 +32,6 @@ const bookResolver = {
 		},
 		books: async (_, __, { models }) => {
 			return await models.Book.find({});
-		},
-		isBookInBookshelf: async (_, { bookId, userId }, { models }) => {
-			if(userId === "") return false;
-			const user = await models.User.findById(userId);
-			return user.bookShelf.indexOf(bookId) >= 0;
 		}
 	},
 	Mutation: {
@@ -201,6 +197,11 @@ const bookResolver = {
 				},
 			});
 		},
+		isBookInBookshelf: async({ id }, { userId } , { models }) => {
+			if(userId === "") return false;
+			const user = await models.User.findById(userId);
+			return user.bookShelf.indexOf(id) !== -1;
+		}
 	},
 };
 
