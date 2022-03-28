@@ -21,6 +21,7 @@ const bookType = `
 		catalog: String
 		image: String!
 		comments: [Comment!]
+		isBookInBookshelf(userId: ID!): Boolean!
 	}
 `;
 
@@ -31,20 +32,16 @@ const bookResolver = {
 		},
 		books: async (_, __, { models }) => {
 			return await models.Book.find({});
-		},
-		isBookInBookshelf: async (_, { bookId, userId }, { models }) => {
-			if(userId === "") return false;
-			const user = await models.User.findById(userId);
-			return user.bookShelf.indexOf(bookId) >= 0;
 		}
 	},
 	Mutation: {
 		toggleBookshelf: async (_, { bookId, userId }, { models }) => {
 			const user = await models.User.findById(userId);
 			const hasBook = user.bookShelf.indexOf(bookId);
+			const book = await models.Book.findById(bookId);
 			// if the book doen't exist in the bookshelf list
 			if (hasBook < 0) {
-				const user = await models.User.findByIdAndUpdate(
+				const newUser = await models.User.findByIdAndUpdate(
 					userId,
 					{
 						$push: {
@@ -56,14 +53,16 @@ const bookResolver = {
 						new: true,
 					}
 				);
+				
 				return {
 					code: "200",
 					success: true,
 					message: "book is successfully added to the bookshelf.",
-					user,
+					user: newUser,
+					book
 				};
 			} else {
-				const user = await models.User.findByIdAndUpdate(
+				const newUser = await models.User.findByIdAndUpdate(
 					userId,
 					{
 						$pull: {
@@ -78,7 +77,8 @@ const bookResolver = {
 					code: "200",
 					success: true,
 					message: "book is successfully removed from the bookshelf.",
-					user,
+					user: newUser,
+					book
 				};
 			}
 		},
@@ -201,6 +201,11 @@ const bookResolver = {
 				},
 			});
 		},
+		isBookInBookshelf: async({ id }, { userId } , { models }) => {
+			if(userId === "") return false;
+			const user = await models.User.findById(userId);
+			return user.bookShelf.indexOf(id) !== -1;
+		}
 	},
 };
 

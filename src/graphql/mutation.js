@@ -20,6 +20,7 @@ const mutationType = `
     success: Boolean!
     message: String!
     user: User
+    book: Book
   }
 
   type addCommentResponse implements MutationResponse {
