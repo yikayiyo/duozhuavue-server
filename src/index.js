@@ -14,12 +14,9 @@ const helmet = require("helmet");
 const cors = require("cors");
 
 let corsOptions = {optionsSuccessStatus: 200};
-if(process.env.NODE_ENV === "dev") {
-  corsOptions.origin = process.env.ORIGIN_DEV;
-}else {
-	corsOptions.origin = process.env.ORIGIN_PRODUCTION;
+if(process.env.NODE_ENV !== "dev") {
+	corsOptions.origin = RegExp(process.env.ORIGIN_PRODUCTION);
 }
-
 const http = require("http");
 
 const typeDefs = require("./schema.js");
@@ -32,7 +29,7 @@ async function startApolloServer(typeDefs, resolvers) {
 	if(process.env.NODE_ENV !== "dev") {
 		app.use(helmet());
 		app.use(cors(corsOptions));
-	}	
+	}
 	const httpServer = http.createServer(app);
 	const server = new ApolloServer({
 		typeDefs,
