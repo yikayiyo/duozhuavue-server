@@ -12,7 +12,7 @@
   "author": "yikayiyo",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "nodemon": "^2.0.20"
   },
   "dependencies": {
     "apollo-server": ">=3.4.1",
