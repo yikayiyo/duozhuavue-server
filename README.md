@@ -8,7 +8,7 @@
 ```
 DB_HOST=your-db-host
 JWT_SECRET=your-jwt-secret
-PORT=5000
+PORT=80
 NODE_ENV=dev
 ORIGIN_PRODUCTION=your-client-url
 ORIGIN_DEV=http://localhost:3000
